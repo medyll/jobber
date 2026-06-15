@@ -1,0 +1,30 @@
+# Jobber Configuration
+# This file controls Jobber's behavior and integration with other services
+
+ollama:
+  enabled: true
+  base_url: http://localhost:11434
+  model: mistral
+  timeout: 30
+
+playwright:
+  browser: chromium
+  headless: true
+  timeout: 60000
+
+logging:
+  level: INFO
+  file: jobber.log
+  max_size: 10MB
+  backup_count: 5
+  format: "[%(asctime)s] [%(levelname)s] [%(name)s] - %(message)s"
+
+paths:
+  data_dir: data
+  temp_dir: temp
+  resume_cache: cache/resumes
+
+mcp_server:
+  host: 0.0.0.0
+  port: 9000
+  max_workers: 4
