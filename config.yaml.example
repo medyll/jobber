@@ -1,0 +1,35 @@
+# Jobber Configuration Example
+# Copy this file to config.yaml and customize for your setup
+
+ollama:
+  enabled: true          # Set to false to disable Ollama semantic matching
+  base_url: http://localhost:11434  # Ollama server URL
+  model: mistral         # Ollama model to use (mistral, llama2, etc.)
+  timeout: 30            # Timeout in seconds for Ollama requests
+
+playwright:
+  browser: chromium      # Browser to use (chromium, firefox, webkit)
+  headless: true         # Run browser in headless mode
+  timeout: 60000         # Timeout in milliseconds for Playwright operations
+
+logging:
+  level: INFO            # Logging level (DEBUG, INFO, WARNING, ERROR, CRITICAL)
+  file: jobber.log       # Log file path
+  max_size: 10MB         # Maximum log file size before rotation
+  backup_count: 5        # Number of backup log files to keep
+  format: "[%(asctime)s] [%(levelname)s] [%(name)s] - %(message)s"  # Log format
+
+paths:
+  data_dir: data         # Directory for persistent data
+  temp_dir: temp         # Directory for temporary files
+  resume_cache: cache/resumes  # Directory for cached parsed resumes
+
+mcp_server:
+  host: 0.0.0.0          # Host to bind the MCP server to
+  port: 9000             # Port to listen on
+  max_workers: 4         # Maximum number of concurrent workers
+
+# Additional optional settings
+# environment: production  # Set to 'production' for production mode
+# debug: false            # Enable debug mode
+# proxy: http://proxy.example.com:8080  # HTTP proxy for outbound requests

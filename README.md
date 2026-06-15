@@ -24,11 +24,81 @@ resume.pdf + job URL
 
 ## Installation
 
+### Quick Start (Windows)
+
+For the easiest setup on Windows, use our installation script:
+
+```powershell
+# Clone the repository
+git clone https://github.com/you/jobber
+cd jobber
+
+# Run the installation script (creates venv, installs deps, sets up config)
+.\install.ps1
+
+# Activate the virtual environment
+.\.venv\Scripts\Activate.ps1
+```
+
+### Manual Installation
+
 ```bash
 git clone https://github.com/you/jobber
 cd jobber
 pip install -r requirements.txt
 playwright install chromium
+```
+
+### Without Ollama (Keyword-only mode)
+
+```powershell
+.\install.ps1 -NoOllama
+```
+
+## Configuration
+
+Jobber uses a centralized configuration file (`config.yaml`) for all settings:
+
+```yaml
+# Example configuration
+ollama:
+  enabled: true
+  base_url: http://localhost:11434
+  model: mistral
+  timeout: 30
+
+playwright:
+  browser: chromium
+  headless: true
+  timeout: 60000
+
+mcp_server:
+  host: 0.0.0.0
+  port: 9000
+  max_workers: 4
+```
+
+Edit `config.yaml` to customize Jobber's behavior. The installation script creates a default configuration.
+
+## Service Management (Windows)
+
+Jobber can be run as a Windows service for the MCP server:
+
+```powershell
+# Install the service (requires admin)
+.\jobber-service.ps1 install
+
+# Start the service
+.\jobber-service.ps1 start
+
+# Check status
+.\jobber-service.ps1 status
+
+# Stop the service
+.\jobber-service.ps1 stop
+
+# Uninstall the service
+.\jobber-service.ps1 uninstall
 ```
 
 ## Quickstart
