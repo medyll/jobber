@@ -1,0 +1,40 @@
+# Secrets — never commit
+.idae-agent-key
+.mcp.json
+.env
+*.key
+
+# Logs
+.idae-server.log
+*.log
+
+# Legacy SQLite store (superseded by idae-machine MongoDB — UNIFY)
+jobber.db
+*.sqlite
+*.sqlite3
+*.db
+*.db.bak
+*.bak
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+env/
+*.egg-info/
+.coverage
+htmlcov/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Node (if any tooling lands here)
+node_modules/

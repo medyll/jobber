@@ -1,0 +1,181 @@
+# BMAD Status Template — Canonical Reference
+# This file is the single source of truth for BMAD project state.
+# Location: workspace/references/bmad/status-template.yaml
+#
+# Usage: Copy this template to your project's ./bmad/status.yaml
+# Command: cp workspace/references/bmad/status-template.yaml <project>/bmad/status.yaml
+
+# ── Core Identity ─────────────────────────────────────────────────────────────
+project: jobber
+phase: release
+progress: 100
+
+# ── Chain Protocol (CRITICAL) ─────────────────────────────────────────────────
+next_action: "Project complete — ready for release"
+next_command: "bmad doc"
+next_role: "developer"
+active_role: "developer"
+
+# ── Dependencies (optional) ───────────────────────────────────────────────────
+# List projects this project depends on. Use for blocking/optional dependencies.
+# dependencies:
+#   - project: tailscale-domains
+#     status: blocking    # "blocking" or "optional"
+#     reason: "Need domains for deployment"
+#     satisfied: false    # Auto-set by BMAD when dependency is complete
+dependencies: []
+
+# ── Phase Tracking ────────────────────────────────────────────────────────────
+phases:
+  - name: planning
+    status: done
+  - name: development
+    status: in_progress
+  - name: testing
+    status: upcoming
+  - name: release
+    status: upcoming
+
+# ── Strategic Dimensions ──────────────────────────────────────────────────────
+marketing:
+  - "Automates job application workflow end-to-end"
+  - "Tailors resume to each job description automatically"
+  - "Saves hours per application with intelligent PDF generation"
+
+product:
+  - "Sprint 1 core pipeline complete — parser, JD analyzer, semantic matcher all passing"
+  - "Matcher: Ollama LLM primary, sentence-transformers embeddings fallback, keyword overlap last resort"
+  - "37 unit tests passing across 3 modules (11 + 12 + 14)"
+  - "Auto-apply bot and tracking deferred to sprint 2+"
+
+far_vision:
+  - "Full pipeline: parse resume → scrape JD → match → generate PDF → auto-apply"
+  - "Local-first (Ollama) — no cloud API keys required"
+  - "Tracking dashboard for application status"
+
+# ── Artifacts ─────────────────────────────────────────────────────────────────
+artifacts:
+  prd: "bmad/prd.md"
+  architecture: "bmad/architecture.md"
+  tech-spec: missing
+
+# ── Sprints ───────────────────────────────────────────────────────────────────
+sprints:
+  - number: 1
+    goal: "Core pipeline — parser + JD scraper + semantic matcher"
+    status: completed
+    stories:
+      - id: S1-01
+        title: "Resume Parser (PDF/Docx) with PII masking"
+        status: complete
+        tests_executed: true
+        test_output: "bmad/artifacts/test-report-S1-01.md"
+        test_result: pass
+      - id: S1-02
+        title: "JD Analyzer — scrape job descriptions (Playwright)"
+        status: complete
+        tests_executed: true
+        test_output: "bmad/artifacts/test-report-S1-02.md"
+        test_result: pass
+      - id: S1-03
+        title: "Semantic Matcher — Ollama LLM resume-vs-JD scoring"
+        status: complete
+        tests_executed: true
+        test_output: "bmad/artifacts/test-report-S1-03.md"
+        test_result: pass
+  - number: 2
+    goal: "Tailoring & Output — tailor resume, generate PDF, auto-apply"
+    status: completed
+    stories:
+      - id: S2-01
+        title: "Resume Tailor — Ollama rewrites resume sections to target JD"
+        status: complete
+        tests_executed: true
+        test_output: "bmad/artifacts/test-report-S2-01.md"
+        test_result: pass
+      - id: S2-02
+        title: "PDF Generator — render tailored resume to polished PDF"
+        status: complete
+        tests_executed: true
+        test_output: "bmad/artifacts/test-report-S2-02.md"
+        test_result: pass
+      - id: S2-03
+        title: "Auto-Apply Bot — Playwright form filler for job applications"
+        status: complete
+        tests_executed: true
+        test_output: "bmad/artifacts/test-report-S2-03.md"
+        test_result: pass
+  - number: 3
+    goal: "Release prep — tracker + pipeline entrypoint + README"
+    status: completed
+    stories:
+      - id: S3-01
+        title: "Application Tracker — SQLite logging"
+        status: complete
+        tests_executed: true
+        test_output: "bmad/artifacts/test-report-S3-sprint.md"
+        test_result: pass
+      - id: S3-02
+        title: "Pipeline Entrypoint — main.py end-to-end orchestration"
+        status: complete
+        tests_executed: true
+        test_output: "bmad/artifacts/test-report-S3-sprint.md"
+        test_result: pass
+      - id: S3-03
+        title: "README & Docs"
+        status: complete
+        tests_executed: true
+        test_output: "bmad/artifacts/test-report-S3-sprint.md"
+        test_result: pass
+# Example:
+# sprints:
+#   - number: 1
+#     goal: "Foundation sprint — core architecture and setup"
+#     status: completed
+#     stories:
+#       - id: S1-01
+#         title: "Project initialization"
+#         status: complete
+#         tests_executed: true
+#         test_output: "bmad/artifacts/test-report-S1-01.md"
+#         test_result: pass
+#       - id: S1-02
+#         title: "Core module implementation"
+#         status: in_progress
+#         tests_executed: false
+#         test_output: null
+#         test_result: null
+
+# ── QA / Bugs (optional) ──────────────────────────────────────────────────────
+# Track known issues
+qa:
+  bugs: []
+  # Example:
+  # bugs:
+  #   - "Login fails on Safari mobile"
+  #   - "Export timeout for large datasets"
+
+# ── Notes ─────────────────────────────────────────────────────────────────────
+#
+# CHAIN PROTOCOL VALIDATION:
+# - next_role "pm" → next_command must be PM command (bmad plan prd, bmad plan spec)
+# - next_role "dev" → next_command must be dev command (bmad continue, bmad dev story)
+# - next_role "tester" → next_command must be test command (bmad test unit, bmad test e2e)
+# - next_role "scrum" → next_command must be scrum command (bmad sprint, bmad status)
+# - Inconsistency = HARD BLOCKER
+#
+# STORY COMPLETION RULE:
+# - A story CANNOT be marked "complete" without tests_executed: true
+# - test_output must reference an actual test report artifact
+# - test_result must be "pass" for story completion
+#
+# DIMENSION UPDATES:
+# - marketing: External-facing progress (demos, copy, launch readiness)
+# - product: Product decisions (user flows, blockers, features)
+# - far_vision: Strategic direction (future features, architecture, research)
+# - All three updated at end of every action
+#
+# YAML FORMATTING:
+# - Use double quotes for values with special chars: : # { } [ ] , & * ? | - < > = ! % @ \
+# - Always 2-space indentation, no tabs
+# - No block scalars (>- | -) in status.yaml — inline quoted strings only
