@@ -7,7 +7,7 @@ the input is the **HTML body of a job-alert email** (LinkedIn / Indeed / Welcome
 to the Jungle / Glassdoor digests, recruiter mails). A single digest commonly
 bundles 5-20 postings, so the output is a **list** of structured job dicts.
 
-Pure / no I/O / no persistence (UNIFY: jobber computes, idae stores). Output is
+Pure / no I/O / no persistence (UNIFY: jobber computes, idae-machine stores). Output is
 aligned 1-for-1 with the idae `job` collection so the agent can `idae.create`
 each row directly:
 

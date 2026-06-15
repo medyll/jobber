@@ -6,12 +6,12 @@ description: Methodology for AI-led email job search (UNIFY). Use when the user 
 # imap-job-search
 
 Non-code playbook for the UNIFY job-search loop. Three MCP servers, one store:
-**protonesk** (mail I/O) → **jobber** (compute) → **idae** (MongoDB store,
+**protonesk** (mail I/O) → **jobber** (compute) → **idae-machine** (MongoDB store,
 `jobberScheme`). You are the orchestrator. Persist only data conforming to the
 idae `job` / `match_result` / `job_skill` / `job_event` / `email_message`
-collections. Never use idae UI components — MCP + DB only.
+collections. Never use idae-machine UI components — MCP + DB only.
 
-## Board map (sender domain → idae `job_source` + IMAP recipe)
+## Board map (sender domain → idae-machine `job_source` + IMAP recipe)
 
 | Source code | Sender domain | Typical FROM | Subject keywords | Shape |
 |---|---|---|---|---|
@@ -35,7 +35,7 @@ recruiter=5, other=6).
 
 1. **Cursor** — last processed message date (find_one above).
 2. **Search** — one `search_messages` per board with its recipe.
-3. **Pre-filter** (cheap, before any LLM): skip messages already in idae
+3. **Pre-filter** (cheap, before any LLM): skip messages already in idae-machine
    (`find_one email_message {message_id}` with `processed:true`); skip obvious
    non-alerts by subject. Only then fetch bodies.
 4. **Fetch** — `get_message` → HTML.
@@ -73,7 +73,7 @@ user; default surface cut = `score >= 0.6`.
 - A digest re-sent by the board is skipped at step 3.
 - The same posting seen across two boards dedupes on canonical `link`.
 
-## Referential mapping (text → idae ids)
+## Referential mapping (text → idae-machine ids)
 
 - `sender_domain` → `job_source` (table above).
 - Title keywords → `seniority` (junior/mid/senior/lead/principal) and
@@ -85,6 +85,6 @@ user; default surface cut = `score >= 0.6`.
 ## Don'ts
 
 - Don't persist anything outside `jobberScheme` shapes.
-- Don't hard-delete mail; prefer `move_message`. idae deletes are soft by default.
+- Don't hard-delete mail; prefer `move_message`. idae-machine deletes are soft by default.
 - Don't invent offers — real jobs come only from the mailbox. The two `TEST —`
   seeded jobs are safe to delete.

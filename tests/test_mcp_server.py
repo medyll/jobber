@@ -50,7 +50,7 @@ def test_normalize_profile_parser_shape_passthrough():
     assert m._normalize_profile(p) is p
 
 
-def test_normalize_profile_idae_shape_adapts():
+def test_normalize_profile_idae_machine_shape_adapts():
     idae_profile = {
         'full_name': 'Meddy Lebrun',
         'headline': 'Lead Dev',

@@ -5,7 +5,7 @@ Jobber — Compute CLI (post-pivot)
 After the UNIFY pivot, jobber is a **stateless coprocessor**: it parses a CV,
 extracts postings from alert-email HTML, and scores fit vs the profile. It does
 **not** persist, tailor, generate PDFs, or auto-apply — persistence/dedup/triage
-live in the idae-machine MongoDB store (via its MCP), and orchestration is done
+live in the idae-machine MongoDB store (via its MCP server `idae`), and orchestration is done
 by the agent. The legacy end-to-end pipeline (tailor/pdf/apply/tracker) is
 archived under `bmad/legacy/`.
 

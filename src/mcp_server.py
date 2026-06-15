@@ -4,7 +4,7 @@ Jobber — MCP server (compute only)
 
 UNIFY.md §6. Exposes jobber's pure compute over MCP (stdio) for an orchestrating
 agent. NO persistence, NO mailbox, NO state: the agent reads mail via the
-`protonesk` MCP and persists results via the `idae` MCP (MongoDB store). This
+`protonesk` MCP and persists results via the `idae` MCP of idae-machine (MongoDB store). This
 server only:
 
     profile_parse(resume_path, mask_pii)        -> profile JSON   (parser.py)
@@ -80,7 +80,7 @@ def score_job(profile: Dict[str, Any], job: Dict[str, Any]) -> Dict[str, Any]:
     """
     Score a job posting against the candidate profile (Ollama local, embeddings
     fallback). Does NOT persist — the agent writes a `match_result` row and
-    `job_skill` rows into idae.
+    `job_skill` rows into idae-machine.
 
     Args:
         profile: Profile dict. Accepts either the parser shape ({personal, skills,

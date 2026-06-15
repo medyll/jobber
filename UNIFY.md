@@ -25,7 +25,7 @@ heuristiques de pré-filtrage). Trois serveurs MCP, une seule base :
 
 Décision : **MCP-only, store = idae-machine**. jobber ne stocke plus rien
 lui-même ; il calcule. La persistance, la dédup, le tri, l'historique vivent
-dans Mongo via le MCP idae (mêmes hooks/validation/audit que le REST).
+dans Mongo via le MCP idae-machine (mêmes hooks/validation/audit que le REST).
 
 ---
 
@@ -69,7 +69,7 @@ stocke, sert).
 
 idae-machine est le **store**. jobber est un **coprocesseur** sans persistance.
 L'agent fait la couture : il lit le HTML (protonesk) → calcule (jobber) →
-écrit/lit (idae).
+écrit/lit (idae-machine).
 
 ---
 
@@ -150,7 +150,7 @@ L'agent décide quand relancer (quotidien), comment éviter le retraitement
 ## 6. MCP `jobber` (à créer — seule brique manquante)
 
 Wrapper **mince** MCP autour des modules Python existants. **Aucune persistance**
-(c'est le job d'idae). Transport **stdio**, SDK Python `mcp`.
+(c'est le job d'idae-machine). Transport **stdio**, SDK Python `mcp`.
 
 `src/mcp_server.py` :
 
@@ -162,7 +162,7 @@ mcp = FastMCP("jobber")
 
 @mcp.tool()
 def profile_parse(resume_path: str, mask_pii: bool = True) -> dict:
-    "Parse un CV (PDF/Docx) en profil JSON. NE persiste pas — l'agent écrit via idae."
+    "Parse un CV (PDF/Docx) en profil JSON. NE persiste pas — l'agent écrit via idae-machine."
     return parser.parse(resume_path, mask_pii=mask_pii)
 
 @mcp.tool()
@@ -252,7 +252,7 @@ Couche savoir non-code chargée par l'agent. Contenu :
 - **Cadence agent** : quand relancer, dédup (`email_message.processed`/`job.link`),
   comment résumer les nouveaux matchs.
 
-La skill n'exécute pas de code : elle oriente l'enchaînement protonesk → jobber → idae.
+La skill n'exécute pas de code : elle oriente l'enchaînement protonesk → jobber → idae-machine.
 
 ---
 
@@ -266,7 +266,7 @@ npx tsx server/src/bootstrap/bootstrap.ts jobber
 # dans jobber_machine_app / jobber_machine_user / jobber_machine_base
 ```
 
-**2. Lancer le serveur idae sur l'org jobber** (`server/.env`) :
+**2. Lancer le serveur idae-machine sur l'org jobber** (`server/.env`) :
 ```env
 MONGODB_URI=mongodb://admin:<pwd>@localhost:27017
 ORG=jobber
@@ -284,7 +284,7 @@ cd server && npm run build && npm start   # tsc → node dist/index.js → port 
 > `dotenv` n'override pas l'env déjà présent : `$env:ORG`/`$env:AUTH_DISABLED` passés au
 > lancement priment sur `server/.env` (utile pour basculer org/auth sans éditer le fichier).
 
-**3. Mint une clé API agent** (via le MCP idae, voir MCP-GUIDE) :
+**3. Mint une clé API agent** (via le MCP idae-machine, voir MCP-GUIDE) :
 ```
 auth_login(login:"admin", password:"admin123")  → JWT
 apikey_create(name:"jobber-agent")               → mk_jobber_xxxx   (avec le JWT)
@@ -334,11 +334,11 @@ Liveness : `idae.health` (public) → `{status, org:"jobber", flags}`.
 
 ### Fait (vérifié e2e le 2026-06-13)
 
-- ✅ **Modèle idae** : `jobberScheme` + `jobberSeed` (16 collections, profil réel,
+- ✅ **Modèle idae-machine** : `jobberScheme` + `jobberSeed` (16 collections, profil réel,
   45 skills, référentiels). Source : `idae-machine/server/src/models/jobber/jobberScheme.ts`.
 - ✅ **Bootstrap** : `npx tsx src/bootstrap/bootstrap.ts jobber` (depuis `server/`,
   URI Mongo via `server/.env`) → publie + seed dans `jobber_machine_{app,user,base}`.
-- ✅ **Serveur idae** : démarre sur `ORG=jobber`, MCP `/api/mcp` répond (`health` → org=jobber).
+- ✅ **Serveur idae-machine** : démarre sur `ORG=jobber`, MCP `/api/mcp` répond (`health` → org=jobber).
 - ✅ **MCP store prouvé** : `find`/`find_one`/`count`/`create`/`delete_by_id` OK ;
   FK passées par id, résolues côté serveur (objet `fks` en retour).
 - ✅ **jobber compute** : `src/jd_email_extractor.py` (refactor email), `src/parser.py`
@@ -349,7 +349,7 @@ Liveness : `idae.health` (public) → `{status, org:"jobber", flags}`.
 
 ### Reste à faire (pour la boucle live)
 
-1. ✅ **Auth réelle idae** : serveur lancé `ORG=jobber` + `AUTH_DISABLED=false` ;
+1. ✅ **Auth réelle idae-machine** : serveur lancé `ORG=jobber` + `AUTH_DISABLED=false` ;
    `auth_login(admin/admin123)` → JWT → `apikey_create("jobber-agent")` →
    **`mk_jobber_8e97…`** (vérifié `auth_whoami` : admin, org=jobber, bearer).
    Clé sauvée dans `D:/development/jobber/.idae-agent-key` (secret — ne pas committer).
@@ -375,13 +375,13 @@ Liveness : `idae.health` (public) → `{status, org:"jobber", flags}`.
    `main.py` (le store est idae, plus de SQLite).
 
 « Fini » v1 : l'agent, à la demande, lit les nouvelles alertes, extrait, score,
-dédup, persiste dans Mongo et restitue un classement — par MCP, sans UI.
+dédup, persiste dans idae-machine et restitue un classement — par MCP, sans UI.
 
 ---
 
 ## 12. UI plus tard (idae-machine, hors v1)
 
-Le modèle vit déjà dans idae : quand le front sera prêt, les vues
+Le modèle vit déjà dans idae-machine : quand le front sera prêt, les vues
 Explorer/Card consomment `job`/`match_result`/`job_event` **sans migration** —
 le store et le schéma sont les mêmes. Aucune dette : UNIFY n'écrit que des
 données conformes à `jobberScheme`. (Composants UI non utilisés en v1, par

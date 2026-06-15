@@ -12,10 +12,10 @@ orchestrates three MCP servers the agent already has:
   `list_messages`/`list_folders`, `mark_message`/`move_message`.
 - **`jobber`** (compute, stateless): `extract_jobs_from_email(html, source_hint)`,
   `score_job(profile, job)`, `profile_parse(resume_path, mask_pii)`.
-- **`idae`** (store, MongoDB org=jobber): `find` / `find_one` / `get_by_id` /
+- **`idae`** (idae-machine store, MongoDB org=jobber): `find` / `find_one` / `get_by_id` /
   `count` / `aggregate` / `create` / `update_by_id` / `resolve_fks` / `health`.
 
-Store is idae. jobber never persists. Mail stays in Proton via the bridge.
+Store is idae-machine. jobber never persists. Mail stays in Proton via the bridge.
 
 ---
 
@@ -107,7 +107,7 @@ window — summarize without pulling rows.
 
 ---
 
-## Referential mapping (email → idae ids)
+## Referential mapping (email → idae-machine ids)
 
 Map extracted strings to seeded referentials (see `jobberScheme.ts` / `jobberSeed`):
 
@@ -149,5 +149,5 @@ Map extracted strings to seeded referentials (see `jobberScheme.ts` / `jobberSee
   no posting/CV data leaves the machine through this loop.
 - **No fake data**: never invent postings. Only persist what extraction produced. The
   two `TEST —` rows in the seed are deletable fixtures.
-- **idae auth**: agent uses `Bearer mk_jobber_…` (long-lived, revocable). `idae.health`
+- **idae-machine auth**: agent uses `Bearer mk_jobber_…` (long-lived, revocable). `idae.health`
   to confirm `org:"jobber"` before writing.

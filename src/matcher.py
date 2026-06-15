@@ -249,7 +249,7 @@ def score(profile: Dict, job: Dict, ollama_model: str = DEFAULT_MODEL) -> Dict:
     Score a job against the candidate profile (UNIFY `jobber.score_job`).
 
     Thin adapter over SemanticMatcher.match that reshapes the result to the
-    contract consumed by the idae store:
+    contract consumed by the idae-machine store:
 
         { score: float 0..1, summary, strengths[], gaps[],
           skills: [{code, kind}],   # kind in matched|missing
@@ -261,7 +261,7 @@ def score(profile: Dict, job: Dict, ollama_model: str = DEFAULT_MODEL) -> Dict:
         ollama_model: Ollama model name.
 
     Returns:
-        dict: Scoring aligned to idae `match_result` + `job_skill`.
+        dict: Scoring aligned to idae-machine `match_result` + `job_skill`.
     """
     m = SemanticMatcher(ollama_model=ollama_model).match(profile, job)
 
