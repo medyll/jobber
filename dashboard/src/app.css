@@ -1,0 +1,198 @@
+:root {
+  --bg: #fafafa;
+  --surface: #fff;
+  --text: #18181b;
+  --text-muted: #6b7280;
+  --border: #e4e4e7;
+  --primary: #2f5bd6;
+  --danger: #c0392b;
+  --decay-0: #2e9e5b;
+  --decay-1: #b0a12e;
+  --decay-2: #d08a2e;
+  --decay-3: #d0602e;
+  --decay-4: #c0392b;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0e0e11;
+    --surface: #17171b;
+    --text: #ededf0;
+    --text-muted: #9b9ba6;
+    --border: #2a2a31;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, sans-serif;
+  line-height: 1.5;
+}
+
+.app {
+  max-width: 760px;
+  margin-inline: auto;
+  padding: 2rem 1.25rem 4rem;
+}
+
+.tagline {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  max-width: 60ch;
+}
+
+.muted {
+  color: var(--text-muted);
+}
+.error {
+  color: var(--danger);
+}
+.ok {
+  color: var(--decay-0);
+}
+
+section {
+  margin-top: 2rem;
+}
+
+.resume-upload,
+.add-form,
+.follow-up {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.25rem;
+}
+
+.add-form .row {
+  display: flex;
+  gap: 0.5rem;
+}
+.add-form input,
+.add-form textarea,
+.add-form button {
+  width: 100%;
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--text);
+  font: inherit;
+}
+.add-form button {
+  background: var(--primary);
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.follow-up ul {
+  padding-left: 1.25rem;
+}
+
+.app-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--decay-0);
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  margin-top: 0.75rem;
+}
+.app-card.decay-1 {
+  border-left-color: var(--decay-1);
+}
+.app-card.decay-2 {
+  border-left-color: var(--decay-2);
+}
+.app-card.decay-3 {
+  border-left-color: var(--decay-3);
+}
+.app-card.decay-4 {
+  border-left-color: var(--decay-4);
+}
+
+.app-card header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+.app-card h3 {
+  margin: 0;
+}
+.company {
+  color: var(--text-muted);
+  margin: 0.15rem 0 0;
+}
+
+.decay-badge {
+  font-size: 0.75rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 999px;
+  white-space: nowrap;
+  color: white;
+  background: var(--decay-0);
+}
+.decay-badge.decay-1 {
+  background: var(--decay-1);
+}
+.decay-badge.decay-2 {
+  background: var(--decay-2);
+}
+.decay-badge.decay-3 {
+  background: var(--decay-3);
+}
+.decay-badge.decay-4 {
+  background: var(--decay-4);
+}
+
+.status-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+  flex-wrap: wrap;
+}
+.actions button {
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  cursor: pointer;
+}
+.actions button.danger {
+  border-color: var(--danger);
+  color: var(--danger);
+}
+.live-toggle {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.notes {
+  margin: 0.75rem 0 0;
+  padding-left: 1.1rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+.notes time {
+  font-variant-numeric: tabular-nums;
+}
