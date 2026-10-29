@@ -14,15 +14,15 @@
     "@medyll/idae-sync": "file:vendor\\medyll-idae-sync-1.0.0.tgz",
     "@medyll/qoolie": "file:vendor\\medyll-qoolie-0.0.1.tgz",
     "@medyll/skiller": "file:vendor\\medyll-skiller-2.2.10.tgz",
-    "react": "^19.3.0",
-    "react-dom": "^19.3.0"
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
   },
   "devDependencies": {
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
-    "@vitejs/plugin-react": "^6.1.1",
+    "@vitejs/plugin-react": "^6.1.2",
     "typescript": "^7.0.2",
-    "vite": "^8.3.1"
+    "vite": "^8.3.5"
   },
   "pnpm": {
     "overrides": {
