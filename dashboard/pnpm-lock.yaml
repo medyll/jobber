@@ -15,19 +15,19 @@ importers:
   .:
     dependencies:
       '@medyll/idae-api':
-        specifier: file:vendor/stub-idae-api
+        specifier: file:vendor\stub-idae-api
         version: file:vendor/stub-idae-api
       '@medyll/idae-idbql':
-        specifier: file:vendor/stub-idae-idbql
+        specifier: file:vendor\stub-idae-idbql
         version: file:vendor/stub-idae-idbql
       '@medyll/idae-sync':
-        specifier: file:vendor/medyll-idae-sync-1.0.0.tgz
+        specifier: file:vendor\medyll-idae-sync-1.0.0.tgz
         version: file:vendor/medyll-idae-sync-1.0.0.tgz
       '@medyll/qoolie':
         specifier: file:vendor\medyll-qoolie-0.0.1.tgz
         version: file:vendor/medyll-qoolie-0.0.1.tgz(react@19.3.1)
       '@medyll/skiller':
-        specifier: file:vendor/medyll-skiller-2.2.10.tgz
+        specifier: file:vendor\medyll-skiller-2.2.10.tgz
         version: file:vendor/medyll-skiller-2.2.10.tgz
       react:
         specifier: ^19.3.1
@@ -209,8 +209,8 @@ packages:
   '@rolldown/pluginutils@1.1.1':
     resolution: {integrity: sha512-glFIJDvLNDtJhT9qrMFWLPbvS+skxgt4L0K8Ei2YtnhPysAJnsI7nyxSJxKj4ADeKX0OLjC4ntRkwpLOoS3rwA==}
 
-  '@tybys/wasm-util@0.10.4':
-    resolution: {integrity: sha512-W3c4gRigFS0T/Ma4qIYF3GDAc5AQdHb1yL5znJT1Zv1YaD9Kitx656wBjvr19qbiosmZT8lWDM5BEMynUqX65A==}
+  '@tybys/wasm-util@0.10.5':
+    resolution: {integrity: sha512-dOGOPxlaNV+G046mZzN+9C0dAcQZeSKcXiVaM0TYy/LM4ttTmgSBDxYfovcYI8Em3+eAbiAYpvWLOv8+ZVRJKA==}
 
   '@types/react-dom@19.3.0':
     resolution: {integrity: sha512-ZI7bU42mZXXKHn/qNLEw2IrbiINU7X5+vfgdixBHkCNpYWXjKgfQ/P+uyGb5CjOLB9UcnTeg3rylQtV2hym44Q==}
@@ -594,7 +594,7 @@ snapshots:
     dependencies:
       '@emnapi/core': 2.0.0-beta.2
       '@emnapi/runtime': 2.0.0-beta.2
-      '@tybys/wasm-util': 0.10.4
+      '@tybys/wasm-util': 0.10.5
     optional: true
 
   '@oxc-project/types@0.156.0': {}
@@ -653,7 +653,7 @@ snapshots:
 
   '@rolldown/pluginutils@1.1.1': {}
 
-  '@tybys/wasm-util@0.10.4':
+  '@tybys/wasm-util@0.10.5':
     dependencies:
       tslib: 2.9.1
     optional: true
