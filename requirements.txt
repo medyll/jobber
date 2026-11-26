@@ -7,7 +7,7 @@
 
 # === CV parsing (parser.py) ===
 PyPDF2>=3.0.1
-pdfminer.six>=20221105
+pdfminer.six>=20260107
 python-docx>=0.8.11
 
 # === Email posting extraction (jd_email_extractor.py) ===
